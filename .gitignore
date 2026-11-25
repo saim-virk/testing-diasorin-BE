@@ -1,0 +1,14 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+media/
+staticfiles/
+.pytest_cache/
+.ruff_cache/
+db.sqlite3
+
+# Local AI tooling and working files: never in the repo
+CLAUDE.md
+.claude/
+graphify-out/

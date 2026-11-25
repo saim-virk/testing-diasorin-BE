@@ -1,0 +1,3027 @@
+openapi: 3.0.3
+info:
+  title: Diasorin Digital Shipment Form API
+  version: 0.1.0
+  description: Backend API for DSI-FORM-000208.
+paths:
+  /api/admin/permissions:
+    get:
+      operationId: admin_permissions_retrieve
+      description: Read-only role -> area -> action map (admin tab, DSF-09.14).
+      tags:
+      - admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsOut'
+          description: ''
+  /api/approvals:
+    get:
+      operationId: approvals_list
+      description: 'The approver''s queue (DSF-04.x approver view): oldest first,
+        with age and SLA class.'
+      parameters:
+      - in: query
+        name: filter
+        schema:
+          type: string
+          enum:
+          - all
+          - decided
+          - pending
+        description: 'Default: pending'
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Search reference, applicant, recipient, cost centre
+      tags:
+      - approvals
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedApprovalRowList'
+          description: ''
+  /api/approvals/my-cost-centres:
+    get:
+      operationId: approvals_my_cost_centres
+      description: '"Cost centres you approve for" (queue footer).'
+      tags:
+      - approvals
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyCostCentre'
+          description: ''
+  /api/auth/csrf:
+    get:
+      operationId: auth_csrf_retrieve
+      tags:
+      - auth
+      responses:
+        '204':
+          description: No response body
+  /api/auth/logout:
+    post:
+      operationId: auth_logout_create
+      tags:
+      - auth
+      responses:
+        '204':
+          description: No response body
+  /api/auth/request-code:
+    post:
+      operationId: auth_request_code_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestCodeInRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestCodeInRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RequestCodeInRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestCodeOut'
+          description: ''
+        '403':
+          description: 'Refused: {code, message}'
+        '429':
+          description: 'Cooldown or rate limit: {code, message, retry_after_seconds}'
+  /api/auth/verify:
+    post:
+      operationId: auth_verify_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyInRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyInRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyInRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+          description: ''
+        '400':
+          description: '{code: wrong|expired|locked, message}'
+        '403':
+          description: 'Refused: {code, message}'
+  /api/health:
+    get:
+      operationId: health_retrieve
+      tags:
+      - health
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+          description: ''
+  /api/masterdata/branches:
+    get:
+      operationId: masterdata_branches_list
+      description: Authenticated, active rows only, not paginated. `?destination=`
+        narrows lists that depend on it.
+      parameters:
+      - in: query
+        name: destination
+        schema:
+          type: string
+          enum:
+          - EU
+          - EXTRA_EU
+          - ITALY
+          - USA
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+          description: ''
+  /api/masterdata/carriers:
+    get:
+      operationId: masterdata_carriers_list
+      description: Authenticated, active rows only, not paginated. `?destination=`
+        narrows lists that depend on it.
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Carrier'
+          description: ''
+  /api/masterdata/cost-centres:
+    get:
+      operationId: masterdata_cost_centres_list
+      description: 'Active cost centres for the signed-in user (reference list: not
+        paginated).'
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostCentre'
+          description: ''
+  /api/masterdata/countries:
+    get:
+      operationId: masterdata_countries_list
+      description: 'Italy: Italy only; USA: United States only; EU / Extra-EU: their
+        countries (DSF-03.05).'
+      parameters:
+      - in: query
+        name: destination
+        schema:
+          type: string
+          enum:
+          - EU
+          - EXTRA_EU
+          - ITALY
+          - USA
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+          description: ''
+  /api/masterdata/currencies:
+    get:
+      operationId: masterdata_currencies_list
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrencyItem'
+          description: ''
+  /api/masterdata/packaging:
+    get:
+      operationId: masterdata_packaging_list
+      description: Authenticated, active rows only, not paginated. `?destination=`
+        narrows lists that depend on it.
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Packaging'
+          description: ''
+  /api/masterdata/pvari:
+    get:
+      operationId: masterdata_pvari_list
+      description: Authenticated, active rows only, not paginated. `?destination=`
+        narrows lists that depend on it.
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PVARI'
+          description: ''
+  /api/masterdata/reason-codes:
+    get:
+      operationId: masterdata_reason_codes_list
+      description: Authenticated, active rows only, not paginated. `?destination=`
+        narrows lists that depend on it.
+      parameters:
+      - in: query
+        name: destination
+        schema:
+          type: string
+          enum:
+          - EU
+          - EXTRA_EU
+          - ITALY
+          - USA
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReasonCode'
+          description: ''
+  /api/masterdata/ships-from:
+    get:
+      operationId: masterdata_ships_from_list
+      description: Ships-from sites with their calendar, read from the database on
+        every call (AC-03.03.4).
+      tags:
+      - masterdata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShipsFrom'
+          description: ''
+  /api/me:
+    get:
+      operationId: me_retrieve
+      tags:
+      - me
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+          description: ''
+    patch:
+      operationId: me_partial_update
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMeRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMeRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+          description: ''
+  /api/me/counts:
+    get:
+      operationId: me_counts
+      tags:
+      - me
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeCounts'
+          description: ''
+  /api/me/view:
+    post:
+      operationId: me_view_create
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SwitchViewInRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SwitchViewInRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SwitchViewInRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+          description: ''
+  /api/public/site:
+    get:
+      operationId: public_site_retrieve
+      tags:
+      - public
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicSite'
+          description: ''
+  /api/requests:
+    get:
+      operationId: requests_list
+      parameters:
+      - in: query
+        name: filter
+        schema:
+          type: string
+          enum:
+          - all
+          - attention
+          - closed
+          - drafts
+          - open
+        description: All, Open, Needs attention, Drafts, Closed
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Search reference, recipient, branch, PVARI code, description,
+          cost centre, status
+      - in: query
+        name: scope
+        schema:
+          type: string
+        description: mine (the only value today)
+      - in: query
+        name: sort
+        schema:
+          type: string
+          enum:
+          - -created
+          - -reference
+          - -ship_day
+          - created
+          - reference
+          - ship_day
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: Comma-separated statuses
+      tags:
+      - requests
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRequestListList'
+          description: ''
+    post:
+      operationId: requests_create
+      description: 'Create the draft on the first save. Send `step: 1` in the body
+        for Continue (validates step 1 first and creates nothing on errors); without
+        it this is Save draft.'
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWriteRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}:
+    get:
+      operationId: requests_retrieve
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/approve:
+    post:
+      operationId: requests_approve
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/attachments:
+    post:
+      operationId: requests_attachments_create
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttachmentUploadRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          description: ''
+  /api/requests/{ref}/attachments/{att_id}:
+    get:
+      operationId: requests_attachments_download
+      parameters:
+      - in: path
+        name: att_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: requests_attachments_delete
+      parameters:
+      - in: path
+        name: att_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '204':
+          description: No response body
+  /api/requests/{ref}/cancel:
+    post:
+      operationId: requests_cancel
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/comments:
+    get:
+      operationId: requests_comments_list
+      description: 'The conversation: events with `in_conversation`, as this viewer
+        may see them.'
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+          description: ''
+    post:
+      operationId: requests_comments_create
+      description: 'The conversation: events with `in_conversation`, as this viewer
+        may see them.'
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostBodyRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+          description: ''
+  /api/requests/{ref}/discard:
+    post:
+      operationId: requests_discard
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/draft:
+    patch:
+      operationId: requests_save_draft
+      description: 'Save draft: save whatever is typed, no validation.'
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRequestWriteRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/duplicate:
+    post:
+      operationId: requests_duplicate
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/events:
+    get:
+      operationId: requests_events
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+          description: ''
+  /api/requests/{ref}/reassign-approver:
+    post:
+      operationId: requests_reassign_approver
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReassignBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReassignBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReassignBodyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/reject:
+    post:
+      operationId: requests_reject
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentBodyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/return:
+    post:
+      operationId: requests_return
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReturnBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReturnBodyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/skip-approval:
+    post:
+      operationId: requests_skip_approval
+      description: POST one transition; the response is the refreshed request detail.
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonBodyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/requests/{ref}/steps/{n}:
+    patch:
+      operationId: requests_save_step
+      description: 'Continue: validate step n only, then save it.'
+      parameters:
+      - in: path
+        name: n
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRequestWriteRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+        '400':
+          description: '{step, errors}'
+  /api/requests/{ref}/submit:
+    post:
+      operationId: requests_submit
+      parameters:
+      - in: path
+        name: ref
+        schema:
+          type: string
+        required: true
+      tags:
+      - requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitBodyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubmitBodyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubmitBodyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+          description: ''
+        '400':
+          description: '{step, errors}'
+  /api/requests/export.csv:
+    get:
+      operationId: requests_export
+      description: 'CSV of the currently filtered list: same rows and columns as the
+        My requests table (DSF-04.02).'
+      tags:
+      - requests
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    ActorRoleEnum:
+      enum:
+      - requester
+      - approver
+      - customer_management
+      - admin
+      - system
+      type: string
+      description: |-
+        * `requester` - Requester
+        * `approver` - Cost Centre Approver
+        * `customer_management` - Customer Management
+        * `admin` - Administrator
+        * `system` - System
+    ApprovalHint:
+      type: object
+      description: What submit would do for the cost centre (the routing function
+        in dry-run mode).
+      properties:
+        required:
+          type: boolean
+        why:
+          type: string
+        approvers:
+          type: array
+          items:
+            type: string
+      required:
+      - approvers
+      - required
+      - why
+    ApprovalRow:
+      type: object
+      properties:
+        reference:
+          type: string
+          maxLength: 16
+        status:
+          $ref: '#/components/schemas/ToStatusEnum'
+        last_submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        applicant_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        requester_name:
+          type: string
+          readOnly: true
+        destination:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DestinationEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        consignee_company:
+          type: string
+          nullable: true
+          maxLength: 200
+        recipient_branch_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        cost_centre_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        cost_centre_name:
+          type: string
+          readOnly: true
+        line_count:
+          type: integer
+          readOnly: true
+        total_weight_kg:
+          type: string
+          readOnly: true
+        overall_temperature:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DefaultTemperatureEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        round_state:
+          type: string
+          nullable: true
+          readOnly: true
+        age_hours:
+          type: integer
+          nullable: true
+          readOnly: true
+        sla_class:
+          type: string
+          nullable: true
+          readOnly: true
+        escalated:
+          type: boolean
+          readOnly: true
+        can_decide:
+          type: boolean
+          readOnly: true
+        decided_at:
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        decided_by_name:
+          type: string
+          nullable: true
+          readOnly: true
+        decision_note:
+          type: string
+          nullable: true
+          readOnly: true
+      required:
+      - age_hours
+      - can_decide
+      - cost_centre_name
+      - decided_at
+      - decided_by_name
+      - decision_note
+      - escalated
+      - line_count
+      - reference
+      - requester_name
+      - round_state
+      - sla_class
+      - total_weight_kg
+    ApprovalSummary:
+      type: object
+      properties:
+        state:
+          type: string
+        names:
+          type: array
+          items:
+            type: string
+      required:
+      - names
+      - state
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        kind:
+          $ref: '#/components/schemas/AttachmentKindEnum'
+        original_name:
+          type: string
+          maxLength: 255
+        content_type:
+          type: string
+          maxLength: 100
+        size_bytes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        uploaded_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - original_name
+    AttachmentKindEnum:
+      enum:
+      - MSDS
+      - COA
+      - OTHER
+      type: string
+      description: |-
+        * `MSDS` - MSDS
+        * `COA` - Certificate of Analysis
+        * `OTHER` - Other
+    AttachmentUploadKindEnum:
+      enum:
+      - MSDS
+      - COA
+      - OTHER
+      type: string
+      description: |-
+        * `MSDS` - MSDS
+        * `COA` - COA
+        * `OTHER` - OTHER
+    AttachmentUploadRequest:
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/AttachmentUploadKindEnum'
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+      - kind
+    BlankEnum:
+      enum:
+      - ''
+    Branch:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 40
+        name:
+          type: string
+          maxLength: 200
+        scope:
+          $ref: '#/components/schemas/ScopeEnum'
+        country:
+          type: string
+          readOnly: true
+        po_required:
+          type: boolean
+      required:
+      - code
+      - country
+      - name
+      - scope
+    Carrier:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
+    CommentBodyRequest:
+      type: object
+      properties:
+        comment:
+          type: string
+          default: ''
+    CostCentre:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 20
+        name:
+          type: string
+          maxLength: 200
+        approval_required:
+          type: boolean
+        approval_hint:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalHint'
+          nullable: true
+          readOnly: true
+      required:
+      - approval_hint
+      - code
+      - name
+    Country:
+      type: object
+      properties:
+        iso2:
+          type: string
+          maxLength: 2
+        name:
+          type: string
+          maxLength: 100
+        scope:
+          $ref: '#/components/schemas/ScopeEnum'
+      required:
+      - iso2
+      - name
+      - scope
+    CreditNotePendingEnum:
+      enum:
+      - 'YES'
+      - NA
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NA` - N.A.
+    CurrencyEnum:
+      enum:
+      - EUR
+      - USD
+      - GBP
+      - CHF
+      - JPY
+      - CNY
+      - CAD
+      - AUD
+      - SEK
+      - DKK
+      - NOK
+      - PLN
+      - CZK
+      - HUF
+      type: string
+      description: |-
+        * `EUR` - EUR
+        * `USD` - USD
+        * `GBP` - GBP
+        * `CHF` - CHF
+        * `JPY` - JPY
+        * `CNY` - CNY
+        * `CAD` - CAD
+        * `AUD` - AUD
+        * `SEK` - SEK
+        * `DKK` - DKK
+        * `NOK` - NOK
+        * `PLN` - PLN
+        * `CZK` - CZK
+        * `HUF` - HUF
+    CurrencyItem:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+      - code
+    DangerousFeaturesEnum:
+      enum:
+      - UNINFECTED
+      - INFECTIOUS
+      - OTHER
+      type: string
+      description: |-
+        * `UNINFECTED` - Uninfected
+        * `INFECTIOUS` - Infectious or potentially infectious
+        * `OTHER` - Other hazards
+    DataloggerEnum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    DefaultTemperatureEnum:
+      enum:
+      - AMBIENT
+      - COOL_2_8
+      - DRY_ICE
+      type: string
+      description: |-
+        * `AMBIENT` - Ambient
+        * `COOL_2_8` - +2 +8 °C
+        * `DRY_ICE` - Dry ice
+    Derived:
+      type: object
+      properties:
+        un_numbers:
+          type: array
+          items:
+            type: string
+        hazard:
+          type: string
+          nullable: true
+        overall_temperature:
+          type: string
+          nullable: true
+        total_weight_kg:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,3})?$
+        line_count:
+          type: integer
+        dangerous_features_locked:
+          type: boolean
+      required:
+      - dangerous_features_locked
+      - hazard
+      - line_count
+      - overall_temperature
+      - total_weight_kg
+      - un_numbers
+    DestinationEnum:
+      enum:
+      - ITALY
+      - EU
+      - EXTRA_EU
+      - USA
+      type: string
+      description: |-
+        * `ITALY` - Italy
+        * `EU` - EU
+        * `EXTRA_EU` - Extra-EU
+        * `USA` - USA
+    Event:
+      type: object
+      properties:
+        at:
+          type: string
+          format: date-time
+        actor_name:
+          type: string
+          nullable: true
+          readOnly: true
+        actor_role:
+          $ref: '#/components/schemas/ActorRoleEnum'
+        kind:
+          $ref: '#/components/schemas/EventKindEnum'
+        in_conversation:
+          type: boolean
+        action:
+          type: string
+          maxLength: 60
+        from_status:
+          oneOf:
+          - $ref: '#/components/schemas/ToStatusEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        to_status:
+          oneOf:
+          - $ref: '#/components/schemas/ToStatusEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        note:
+          type: string
+      required:
+      - action
+      - actor_name
+    EventKindEnum:
+      enum:
+      - EVENT
+      - COMMENT
+      - QUESTION
+      - NOTE
+      type: string
+      description: |-
+        * `EVENT` - Event
+        * `COMMENT` - Comment
+        * `QUESTION` - Question
+        * `NOTE` - Note
+    HazardEnum:
+      enum:
+      - UNINFECTED
+      - INFECTIOUS
+      type: string
+      description: |-
+        * `UNINFECTED` - Uninfected
+        * `INFECTIOUS` - Infectious
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+        db:
+          type: boolean
+      required:
+      - db
+      - status
+    Line:
+      type: object
+      properties:
+        pvari_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,3})?$
+          nullable: true
+        uom:
+          type: string
+          nullable: true
+          maxLength: 20
+        lot_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        net_weight_kg:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,3})?$
+          nullable: true
+        standard_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        currency:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        country_of_origin:
+          type: string
+          nullable: true
+          maxLength: 80
+        temperature:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DefaultTemperatureEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        un_number:
+          type: string
+          nullable: true
+          maxLength: 10
+        hazard:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/HazardEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+    LineWriteRequest:
+      type: object
+      properties:
+        pvari_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,3})?$
+          nullable: true
+        uom:
+          type: string
+          nullable: true
+          maxLength: 20
+        lot_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        net_weight_kg:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,3})?$
+          nullable: true
+        standard_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        currency:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        country_of_origin:
+          type: string
+          nullable: true
+          maxLength: 80
+        temperature:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DefaultTemperatureEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+    MaterialTypeEnum:
+      enum:
+      - IVD
+      - RAW_MATERIALS
+      - OTHER
+      type: string
+      description: |-
+        * `IVD` - IVD
+        * `RAW_MATERIALS` - Raw materials
+        * `OTHER` - Other
+    Me:
+      type: object
+      description: Read shape of /api/me. `view` and `roles` are computed.
+      properties:
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        department:
+          type: string
+          maxLength: 150
+        job_title:
+          type: string
+          maxLength: 150
+        phone:
+          type: string
+          maxLength: 40
+        language:
+          $ref: '#/components/schemas/MeLanguageEnum'
+        default_cost_centre:
+          type: string
+          nullable: true
+        roles:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        view:
+          type: string
+          readOnly: true
+        approval_hint:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalHint'
+          nullable: true
+          readOnly: true
+        permissions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: boolean
+          readOnly: true
+      required:
+      - approval_hint
+      - email
+      - permissions
+      - roles
+      - view
+    MeCounts:
+      type: object
+      properties:
+        approvals_pending:
+          type: integer
+        my_open_requests:
+          type: integer
+      required:
+      - approvals_pending
+      - my_open_requests
+    MeLanguageEnum:
+      enum:
+      - en
+      - it
+      type: string
+      description: |-
+        * `en` - English
+        * `it` - Italiano
+    MyCostCentre:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        approval_required:
+          type: boolean
+        co_approvers:
+          type: array
+          items:
+            type: string
+        pending:
+          type: integer
+      required:
+      - approval_required
+      - co_approvers
+      - code
+      - name
+      - pending
+    NextSteps:
+      type: object
+      properties:
+        approval_required:
+          type: boolean
+        approvers:
+          type: array
+          items:
+            type: string
+        approval_note:
+          type: string
+          nullable: true
+        reminder_hours:
+          type: integer
+        escalate_hours:
+          type: integer
+        specialised_courier:
+          type: boolean
+      required:
+      - approval_note
+      - approval_required
+      - approvers
+      - escalate_hours
+      - reminder_hours
+      - specialised_courier
+    NullEnum:
+      enum:
+      - null
+    PVARI:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 10
+        description_it:
+          type: string
+          maxLength: 255
+        description_en:
+          type: string
+          maxLength: 255
+        un_number:
+          type: string
+          maxLength: 10
+        hazard:
+          $ref: '#/components/schemas/HazardEnum'
+        default_temperature:
+          $ref: '#/components/schemas/DefaultTemperatureEnum'
+      required:
+      - code
+      - default_temperature
+      - description_en
+      - description_it
+      - hazard
+    Packaging:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 20
+        dimensions:
+          type: string
+          maxLength: 60
+        description:
+          type: string
+          maxLength: 120
+      required:
+      - code
+    PaginatedApprovalRowList:
+      type: object
+      required:
+      - count
+      - results
+      - stats
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApprovalRow'
+        stats:
+          type: object
+          properties:
+            awaiting:
+              type: integer
+            over_sla:
+              type: integer
+            decided:
+              type: integer
+            approved_this_month:
+              type: integer
+          required:
+          - awaiting
+          - over_sla
+          - decided
+          - approved_this_month
+    PaginatedRequestListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestList'
+    Parcel:
+      type: object
+      properties:
+        count:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        packaging_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        dimensions:
+          type: string
+          nullable: true
+          maxLength: 60
+        gross_weight_kg:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,3})?$
+          nullable: true
+    ParcelWriteRequest:
+      type: object
+      properties:
+        count:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        packaging_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        dimensions:
+          type: string
+          nullable: true
+          maxLength: 60
+        gross_weight_kg:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,3})?$
+          nullable: true
+    PatchedMeRequest:
+      type: object
+      description: Read shape of /api/me. `view` and `roles` are computed.
+      properties:
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        department:
+          type: string
+          maxLength: 150
+        job_title:
+          type: string
+          maxLength: 150
+        phone:
+          type: string
+          maxLength: 40
+        language:
+          $ref: '#/components/schemas/MeLanguageEnum'
+        default_cost_centre:
+          type: string
+          minLength: 1
+          nullable: true
+    PatchedRequestWriteRequest:
+      type: object
+      description: 'Every editable field is optional and nullable: type checks only,
+        the rules live in services/validation.py.'
+      properties:
+        destination:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DestinationEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        applicant_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        applicant_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        applicant_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        alt_contact_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        alt_contact_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        ships_from_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        ship_day_requested:
+          type: string
+          format: date
+          nullable: true
+        credit_note_pending:
+          $ref: '#/components/schemas/CreditNotePendingEnum'
+        recipient_code:
+          type: string
+          nullable: true
+          maxLength: 40
+        reason_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        consignee_company:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        consignee_street:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_street2:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        consignee_city:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_province:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_country_code:
+          type: string
+          nullable: true
+          maxLength: 60
+        consignee_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        consignee_email:
+          type: string
+          nullable: true
+          maxLength: 254
+        consignee_vat:
+          type: string
+          nullable: true
+          maxLength: 60
+        po_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        cost_centre_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineWriteRequest'
+        dangerous_features:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DangerousFeaturesEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        other_hazard_text:
+          type: string
+          nullable: true
+          maxLength: 255
+        material_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/MaterialTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        material_type_other:
+          type: string
+          nullable: true
+          maxLength: 200
+        rm_description:
+          type: string
+          nullable: true
+          maxLength: 255
+        rm_kind:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RmKindEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        rm_protein:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_lot_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_quantity:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_number_of_vials:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        rm_leftover_stock:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_article_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_date_of_shipment:
+          type: string
+          format: date
+          nullable: true
+        datalogger:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DataloggerEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        shipped_by_employee:
+          type: string
+          nullable: true
+          maxLength: 200
+        shipped_by_recipient:
+          type: string
+          nullable: true
+          maxLength: 200
+        parcels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParcelWriteRequest'
+        dedicated_transport:
+          type: boolean
+        dedicated_transport_note:
+          type: string
+          nullable: true
+          maxLength: 255
+        us_usda_guideline:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaGuidelineEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_usda_guideline_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        us_usda_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_attach_000614:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsAttach000614Enum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_cdc_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsCdcPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_importer_certification_statement:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsImporterCertificationStatementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+    PermissionsOut:
+      type: object
+      properties:
+        roles:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: boolean
+        areas:
+          type: array
+          items:
+            type: string
+      required:
+      - areas
+      - roles
+    PostBodyKindEnum:
+      enum:
+      - comment
+      - question
+      - note
+      type: string
+      description: |-
+        * `comment` - comment
+        * `question` - question
+        * `note` - note
+    PostBodyRequest:
+      type: object
+      properties:
+        kind:
+          allOf:
+          - $ref: '#/components/schemas/PostBodyKindEnum'
+          default: comment
+        text:
+          type: string
+      required:
+      - text
+    PublicSite:
+      type: object
+      description: Everything the public 'How it works' page may show. Never the SFTP
+        host or credentials.
+      properties:
+        ticketing_url:
+          type: string
+        sla_hours:
+          type: integer
+        reminder_hours:
+          type: integer
+        escalate_hours:
+          type: integer
+        approval_global_enabled:
+          type: boolean
+        no_approver_fallback:
+          type: string
+        reject_comment_required:
+          type: boolean
+        self_approval_mode:
+          $ref: '#/components/schemas/SelfApprovalModeEnum'
+        po_mandatory_us:
+          type: boolean
+        msds_required_other_hazard:
+          type: boolean
+        max_parcel_lines:
+          type: integer
+        sync_path:
+          type: string
+        sync_pattern:
+          type: string
+        sync_every_minutes:
+          type: integer
+        sync_alert_hours:
+          type: integer
+        sync_archive_path:
+          type: string
+      required:
+      - approval_global_enabled
+      - escalate_hours
+      - max_parcel_lines
+      - msds_required_other_hazard
+      - no_approver_fallback
+      - po_mandatory_us
+      - reject_comment_required
+      - reminder_hours
+      - self_approval_mode
+      - sla_hours
+      - sync_alert_hours
+      - sync_archive_path
+      - sync_every_minutes
+      - sync_path
+      - sync_pattern
+      - ticketing_url
+    ReasonBodyRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          default: ''
+    ReasonCode:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 10
+        description_it:
+          type: string
+          maxLength: 255
+        description_en:
+          type: string
+          maxLength: 255
+        scope_group:
+          $ref: '#/components/schemas/ScopeGroupEnum'
+      required:
+      - code
+      - description_en
+      - description_it
+      - scope_group
+    ReassignBodyRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+        reason:
+          type: string
+          default: ''
+      required:
+      - email
+    RequestCodeInLanguageEnum:
+      enum:
+      - en
+      - it
+      type: string
+      description: |-
+        * `en` - en
+        * `it` - it
+    RequestCodeInRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+        language:
+          $ref: '#/components/schemas/RequestCodeInLanguageEnum'
+      required:
+      - email
+    RequestCodeOut:
+      type: object
+      properties:
+        expires_in_minutes:
+          type: integer
+        resend_after_seconds:
+          type: integer
+      required:
+      - expires_in_minutes
+      - resend_after_seconds
+    RequestDetail:
+      type: object
+      properties:
+        reference:
+          type: string
+          maxLength: 16
+        status:
+          $ref: '#/components/schemas/ToStatusEnum'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        applicant_email:
+          type: string
+          format: email
+          maxLength: 254
+        destination:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DestinationEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        applicant_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        applicant_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        applicant_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        alt_contact_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        alt_contact_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        ships_from_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        ship_day_requested:
+          type: string
+          format: date
+          nullable: true
+        credit_note_pending:
+          $ref: '#/components/schemas/CreditNotePendingEnum'
+        recipient_code:
+          type: string
+          nullable: true
+          maxLength: 40
+        reason_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        consignee_company:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        consignee_street:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_street2:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        consignee_city:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_province:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_country_code:
+          type: string
+          nullable: true
+          maxLength: 60
+        consignee_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        consignee_email:
+          type: string
+          nullable: true
+          maxLength: 254
+        consignee_vat:
+          type: string
+          nullable: true
+          maxLength: 60
+        po_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        cost_centre_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        dangerous_features:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DangerousFeaturesEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        other_hazard_text:
+          type: string
+          nullable: true
+          maxLength: 255
+        material_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/MaterialTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        material_type_other:
+          type: string
+          nullable: true
+          maxLength: 200
+        rm_description:
+          type: string
+          nullable: true
+          maxLength: 255
+        rm_kind:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RmKindEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        rm_protein:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_lot_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_quantity:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_number_of_vials:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        rm_leftover_stock:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_article_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_date_of_shipment:
+          type: string
+          format: date
+          nullable: true
+        datalogger:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DataloggerEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        shipped_by_employee:
+          type: string
+          nullable: true
+          maxLength: 200
+        shipped_by_recipient:
+          type: string
+          nullable: true
+          maxLength: 200
+        dedicated_transport:
+          type: boolean
+        dedicated_transport_note:
+          type: string
+          nullable: true
+          maxLength: 255
+        us_usda_guideline:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaGuidelineEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_usda_guideline_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        us_usda_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_attach_000614:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsAttach000614Enum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_cdc_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsCdcPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_importer_certification_statement:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsImporterCertificationStatementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+        recipient_branch_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        reason_label_it:
+          type: string
+          nullable: true
+          maxLength: 255
+        reason_label_en:
+          type: string
+          nullable: true
+          maxLength: 255
+        consignee_country_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        cost_centre_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        declaration_accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+        overall_temperature:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DefaultTemperatureEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        version:
+          type: string
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Line'
+          readOnly: true
+        parcels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parcel'
+          readOnly: true
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          readOnly: true
+        derived:
+          allOf:
+          - $ref: '#/components/schemas/Derived'
+          readOnly: true
+        next_steps:
+          allOf:
+          - $ref: '#/components/schemas/NextSteps'
+          readOnly: true
+        routing_hint:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalHint'
+          nullable: true
+          readOnly: true
+        po_required:
+          type: boolean
+          readOnly: true
+        can_edit:
+          type: boolean
+          readOnly: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          readOnly: true
+        available_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        duplicated_from:
+          type: string
+          readOnly: true
+      required:
+      - applicant_email
+      - attachments
+      - available_actions
+      - can_edit
+      - derived
+      - duplicated_from
+      - events
+      - lines
+      - next_steps
+      - parcels
+      - po_required
+      - reference
+      - routing_hint
+      - updated_at
+      - version
+    RequestList:
+      type: object
+      properties:
+        reference:
+          type: string
+          maxLength: 16
+        created_at:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ToStatusEnum'
+        destination:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DestinationEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        consignee_company:
+          type: string
+          nullable: true
+          maxLength: 200
+        recipient_code:
+          type: string
+          nullable: true
+          maxLength: 40
+        recipient_branch_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        ship_day_requested:
+          type: string
+          format: date
+          nullable: true
+        overall_temperature:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DefaultTemperatureEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        cost_centre_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        line_count:
+          type: integer
+          readOnly: true
+        pvari_codes:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        total_weight_kg:
+          type: string
+          readOnly: true
+        approval:
+          allOf:
+          - $ref: '#/components/schemas/ApprovalSummary'
+          nullable: true
+          readOnly: true
+        decision_note:
+          type: string
+          nullable: true
+          readOnly: true
+        decision_by:
+          type: string
+          nullable: true
+          readOnly: true
+        duplicated_from:
+          type: string
+          readOnly: true
+      required:
+      - approval
+      - decision_by
+      - decision_note
+      - duplicated_from
+      - line_count
+      - pvari_codes
+      - reference
+      - total_weight_kg
+    RequestWriteRequest:
+      type: object
+      description: 'Every editable field is optional and nullable: type checks only,
+        the rules live in services/validation.py.'
+      properties:
+        destination:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DestinationEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        applicant_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        applicant_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        applicant_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        alt_contact_name:
+          type: string
+          nullable: true
+          maxLength: 200
+        alt_contact_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        ships_from_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        ship_day_requested:
+          type: string
+          format: date
+          nullable: true
+        credit_note_pending:
+          $ref: '#/components/schemas/CreditNotePendingEnum'
+        recipient_code:
+          type: string
+          nullable: true
+          maxLength: 40
+        reason_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        consignee_company:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_department:
+          type: string
+          nullable: true
+          maxLength: 150
+        consignee_street:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_street2:
+          type: string
+          nullable: true
+          maxLength: 200
+        consignee_postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        consignee_city:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_province:
+          type: string
+          nullable: true
+          maxLength: 100
+        consignee_country_code:
+          type: string
+          nullable: true
+          maxLength: 60
+        consignee_phone:
+          type: string
+          nullable: true
+          maxLength: 40
+        consignee_email:
+          type: string
+          nullable: true
+          maxLength: 254
+        consignee_vat:
+          type: string
+          nullable: true
+          maxLength: 60
+        po_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        cost_centre_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineWriteRequest'
+        dangerous_features:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DangerousFeaturesEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        other_hazard_text:
+          type: string
+          nullable: true
+          maxLength: 255
+        material_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/MaterialTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        material_type_other:
+          type: string
+          nullable: true
+          maxLength: 200
+        rm_description:
+          type: string
+          nullable: true
+          maxLength: 255
+        rm_kind:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/RmKindEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        rm_protein:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_lot_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_quantity:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_number_of_vials:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+        rm_leftover_stock:
+          type: string
+          nullable: true
+          maxLength: 100
+        rm_article_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        rm_date_of_shipment:
+          type: string
+          format: date
+          nullable: true
+        datalogger:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DataloggerEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        shipped_by_employee:
+          type: string
+          nullable: true
+          maxLength: 200
+        shipped_by_recipient:
+          type: string
+          nullable: true
+          maxLength: 200
+        parcels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParcelWriteRequest'
+        dedicated_transport:
+          type: boolean
+        dedicated_transport_note:
+          type: string
+          nullable: true
+          maxLength: 255
+        us_usda_guideline:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaGuidelineEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_usda_guideline_number:
+          type: string
+          nullable: true
+          maxLength: 60
+        us_usda_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsUsdaPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_attach_000614:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsAttach000614Enum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_cdc_permit:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsCdcPermitEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        us_importer_certification_statement:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/UsImporterCertificationStatementEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+    ReturnBodyRequest:
+      type: object
+      properties:
+        note:
+          type: string
+          default: ''
+    RmKindEnum:
+      enum:
+      - TEST_SAMPLE
+      - MAIN_SHIPMENT
+      type: string
+      description: |-
+        * `TEST_SAMPLE` - Test sample
+        * `MAIN_SHIPMENT` - Main shipment
+    ScopeEnum:
+      enum:
+      - ITALY
+      - EU
+      - EXTRA_EU
+      - USA
+      type: string
+      description: |-
+        * `ITALY` - Italy
+        * `EU` - EU
+        * `EXTRA_EU` - Extra-EU
+        * `USA` - USA
+    ScopeGroupEnum:
+      enum:
+      - ITALY
+      - EU_EXTRA
+      type: string
+      description: |-
+        * `ITALY` - Italy
+        * `EU_EXTRA` - EU / Extra-EU / USA
+    SelfApprovalModeEnum:
+      enum:
+      - ROUTE_TO_OTHERS
+      - AUTO_APPROVE
+      type: string
+      description: |-
+        * `ROUTE_TO_OTHERS` - Route to other approvers
+        * `AUTO_APPROVE` - Approve automatically
+    ShipsFrom:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 20
+        name:
+          type: string
+          maxLength: 100
+        applies_calendar:
+          type: boolean
+        allowed_weekdays:
+          type: array
+          items:
+            type: integer
+            maximum: 6
+            minimum: 0
+        hint:
+          type: string
+          nullable: true
+          description: e.g. "Saluggia ships Mon, Tue, Wed, Thu." - null when the site
+            has no calendar.
+          readOnly: true
+      required:
+      - code
+      - hint
+      - name
+    SubmitBodyRequest:
+      type: object
+      properties:
+        declaration:
+          type: boolean
+      required:
+      - declaration
+    SwitchViewInRequest:
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/ViewEnum'
+      required:
+      - view
+    ToStatusEnum:
+      enum:
+      - DRAFT
+      - PENDING_APPROVAL
+      - REJECTED
+      - TO_VERIFY
+      - RETURNED
+      - VERIFIED
+      - PACKED
+      - IN_TRANSIT
+      - DELIVERED
+      - CANCELLED
+      type: string
+      description: |-
+        * `DRAFT` - Draft
+        * `PENDING_APPROVAL` - Pending approval
+        * `REJECTED` - Rejected
+        * `TO_VERIFY` - To verify
+        * `RETURNED` - Returned for correction
+        * `VERIFIED` - Verified
+        * `PACKED` - Picked and packed
+        * `IN_TRANSIT` - In transit
+        * `DELIVERED` - Delivered
+        * `CANCELLED` - Cancelled
+    UsAttach000614Enum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    UsCdcPermitEnum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    UsImporterCertificationStatementEnum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    UsUsdaGuidelineEnum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    UsUsdaPermitEnum:
+      enum:
+      - 'YES'
+      - 'NO'
+      type: string
+      description: |-
+        * `YES` - Yes
+        * `NO` - No
+    VerifyInRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+        code:
+          type: string
+          minLength: 1
+      required:
+      - code
+      - email
+    ViewEnum:
+      enum:
+      - requester
+      - approver
+      - customer_management
+      - admin
+      type: string
+      description: |-
+        * `requester` - requester
+        * `approver` - approver
+        * `customer_management` - customer_management
+        * `admin` - admin

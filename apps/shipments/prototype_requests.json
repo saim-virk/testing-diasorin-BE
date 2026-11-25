@@ -1,0 +1,1224 @@
+[
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0178",
+  "scope": "Italy",
+  "shipDay": "2026-11-06",
+  "recCode": "DS-IT-SAL",
+  "rcpt": {
+   "company": "Ospedale San Raffaele",
+   "first": "Chiara",
+   "last": "Lombardi",
+   "dept": "Laboratory Medicine",
+   "street": "Via Olgettina 60",
+   "zip": "20132",
+   "city": "Milano",
+   "prov": "MI",
+   "country": "IT",
+   "phone": "+39 02 2643 1111",
+   "email": "lab.medicine@hsr.it"
+  },
+  "po": "PO-48213",
+  "reason": "15",
+  "cc": "CC-4410",
+  "credit": "N.A.",
+  "items": [
+   {
+    "code": "P9993",
+    "desc": "LIAISON® Calprotectin kit",
+    "qty": "12 pcs / lot L-77412",
+    "weight": 5.04,
+    "amount": 1240,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 2,
+    "pack": "I/6 G",
+    "dims": "40 × 30 × 30 cm — cool packs",
+    "gross": "5.4"
+   }
+  ],
+  "notes": "Goods-in closes 16:00. Call the lab on arrival.",
+  "created": "2026-11-04 09:14",
+  "status": "In transit",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "g.ferrari@diasorin.com",
+   "decidedAt": "2026-11-04 11:40",
+   "comment": "Replenishment against the November supply plan — approved."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "DHL Medical Express",
+   "awb": "JD0014600006512345",
+   "verifiedAt": "2026-11-04 14:02",
+   "packedAt": "2026-11-05 10:30",
+   "shippedAt": "2026-11-06 08:15",
+   "deliveredAt": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-04 09:14",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-4410 approval"
+   },
+   {
+    "at": "2026-11-04 11:40",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-11-04 14:02",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Verified",
+    "note": "Data complete"
+   },
+   {
+    "at": "2026-11-05 10:30",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Picked and packed",
+    "note": "2 × I/6 G"
+   },
+   {
+    "at": "2026-11-06 08:15",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "In transit",
+    "note": "DHL Medical Express · JD0014600006512345"
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-11-04 11:40",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "kind": "approved",
+    "text": "Replenishment against the November supply plan — approved."
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0171",
+  "scope": "EU",
+  "altContact": "Elena Bruni",
+  "altPhone": "+39 335 902 7711",
+  "shipDay": "2026-10-24",
+  "recCode": "DS-DE-DIE",
+  "rcpt": {
+   "company": "Charité Universitätsmedizin Berlin",
+   "first": "Jonas",
+   "last": "Weber",
+   "dept": "Institute of Virology",
+   "street": "Charitéplatz 1",
+   "zip": "10117",
+   "city": "Berlin",
+   "prov": "",
+   "country": "DE",
+   "phone": "+49 30 450 50",
+   "email": "virologie@charite.de"
+  },
+  "po": "PO-48055",
+  "reason": "09",
+  "cc": "CC-2210",
+  "items": [
+   {
+    "code": "P9995",
+    "desc": "Biological substance category B — validation panel",
+    "qty": "6 vials / lot M-20118",
+    "weight": 3.9,
+    "amount": 2480,
+    "currency": "EUR",
+    "origin": "Germany"
+   }
+  ],
+  "matType": "Other",
+  "otherType": "Validation panel",
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/14 S",
+    "dims": "60 × 40 × 50 cm — dry ice",
+    "gross": "12.0"
+   }
+  ],
+  "dedicated": "Yes",
+  "dedicatedNote": "Dry-ice courier — World Courier",
+  "created": "2026-10-21 15:41",
+  "status": "Delivered",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "g.ferrari@diasorin.com",
+    "l.conti@diasorin.com"
+   ],
+   "decidedBy": "l.conti@diasorin.com",
+   "decidedAt": "2026-10-22 08:05",
+   "comment": "Clinical evaluation samples — approved."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "World Courier",
+   "awb": "WC-7781-20118",
+   "verifiedAt": "2026-10-22 10:00",
+   "packedAt": "2026-10-23 09:20",
+   "shippedAt": "2026-10-24 07:50",
+   "deliveredAt": "2026-10-25 11:10"
+  },
+  "history": [
+   {
+    "at": "2026-10-21 15:41",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-2210 approval"
+   },
+   {
+    "at": "2026-10-22 08:05",
+    "by": "l.conti@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-10-22 10:00",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Verified",
+    "note": ""
+   },
+   {
+    "at": "2026-10-23 09:20",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Picked and packed",
+    "note": ""
+   },
+   {
+    "at": "2026-10-24 07:50",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "In transit",
+    "note": "World Courier · WC-7781-20118"
+   },
+   {
+    "at": "2026-10-25 11:10",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Delivered",
+    "note": "POD signed: Dr. Weber"
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-10-22 08:05",
+    "by": "l.conti@diasorin.com",
+    "role": "approver",
+    "kind": "approved",
+    "text": "Clinical evaluation samples — approved."
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0185",
+  "scope": "USA",
+  "shipDay": "2026-11-17",
+  "recCode": "DS-US-STW",
+  "rcpt": {
+   "company": "Diasorin Inc.",
+   "first": "Karen",
+   "last": "Mitchell",
+   "dept": "Marketing",
+   "street": "1951 Northwestern Ave",
+   "zip": "55082",
+   "city": "Stillwater",
+   "prov": "MN",
+   "country": "US",
+   "phone": "+1 651 439 9710",
+   "email": "k.mitchell@diasorin.com"
+  },
+  "po": "PO-48390",
+  "reason": "19",
+  "cc": "CC-4410",
+  "items": [
+   {
+    "code": "P9925",
+    "desc": "LIAISON® XS demo accessory pack",
+    "qty": "2 pcs / lot ACC-2210",
+    "weight": 6.2,
+    "amount": 980,
+    "currency": "EUR",
+    "origin": "Italy"
+   },
+   {
+    "code": "P9935",
+    "desc": "Congress brochures (paper)",
+    "qty": "400 pcs",
+    "weight": 9.5,
+    "amount": 320,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/10",
+    "dims": "37 × 37 × 52 cm",
+    "gross": "16.8"
+   }
+  ],
+  "usa": {
+   "usdaG": "No",
+   "usdaGNo": "",
+   "usdaP": "No",
+   "att614": "Yes",
+   "cdc": "No",
+   "ics": "Yes"
+  },
+  "notes": "Demo material for AACC — must land 3 days before the congress.",
+  "created": "2026-11-09 16:20",
+  "status": "Pending approval",
+  "approval": {
+   "required": true,
+   "state": "Pending",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-09 16:20",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-4410 approval · g.ferrari@diasorin.com notified"
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0160",
+  "scope": "Italy",
+  "shipDay": "2026-10-09",
+  "recCode": "DS-IT-GER",
+  "rcpt": {
+   "company": "Diasorin Italia S.p.A. — Gerenzano",
+   "first": "Stefano",
+   "last": "Villa",
+   "dept": "R&D",
+   "street": "Via Lepetit 34",
+   "zip": "21040",
+   "city": "Gerenzano",
+   "prov": "VA",
+   "country": "IT",
+   "phone": "+39 02 9644 1",
+   "email": "s.villa@diasorin.com"
+  },
+  "reason": "85",
+  "cc": "CC-4410",
+  "items": [
+   {
+    "code": "P9925",
+    "desc": "Spare racks for LIAISON XL",
+    "qty": "4 pcs",
+    "weight": 2.1,
+    "amount": 410,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/4",
+    "dims": "25 × 24 × 24 cm",
+    "gross": "2.6"
+   }
+  ],
+  "created": "2026-10-07 07:55",
+  "status": "Cancelled",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "g.ferrari@diasorin.com",
+   "decidedAt": "2026-10-07 09:10",
+   "comment": "OK"
+  },
+  "history": [
+   {
+    "at": "2026-10-07 07:55",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": ""
+   },
+   {
+    "at": "2026-10-07 09:10",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-10-08 12:00",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Cancelled",
+    "note": "Racks found in Gerenzano stock"
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0186",
+  "scope": "EU",
+  "shipDay": "2026-11-19",
+  "recCode": "DS-FR-ANT",
+  "rcpt": {
+   "company": "Diasorin France SAS",
+   "first": "Claire",
+   "last": "Moreau",
+   "dept": "Marketing",
+   "street": "2 rue Georges Besse",
+   "zip": "92160",
+   "city": "Antony",
+   "prov": "",
+   "country": "FR",
+   "phone": "+33 1 55 59 11 11",
+   "email": "c.moreau@diasorin.com"
+  },
+  "reason": "17",
+  "cc": "CC-3300",
+  "items": [
+   {
+    "code": "P9935",
+    "desc": "Product leaflets — LIAISON® range (FR)",
+    "qty": "1,200 pcs",
+    "weight": 14,
+    "amount": 260,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [],
+  "created": "2026-11-10 09:10",
+  "status": "Draft",
+  "history": [
+   {
+    "at": "2026-11-10 09:10",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Draft saved",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0176",
+  "scope": "Italy",
+  "shipDay": "2026-11-05",
+  "recCode": "DS-IT-GER",
+  "rcpt": {
+   "company": "Diasorin Italia S.p.A. — Gerenzano",
+   "first": "Elena",
+   "last": "Bruni",
+   "dept": "Molecular Diagnostics",
+   "street": "Via Lepetit 34",
+   "zip": "21040",
+   "city": "Gerenzano",
+   "prov": "VA",
+   "country": "IT",
+   "phone": "+39 335 902 7711",
+   "email": "e.bruni@diasorin.com"
+  },
+  "reason": "102",
+  "cc": "CC-4410",
+  "items": [
+   {
+    "code": "P9993",
+    "desc": "MDX six-monthly maintenance kit",
+    "qty": "3 kits / lot MDX-0931",
+    "weight": 4.2,
+    "amount": 1860,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/6 G",
+    "dims": "40 × 30 × 30 cm — cool packs",
+    "gross": "5.0"
+   }
+  ],
+  "created": "2026-11-03 10:08",
+  "status": "Rejected",
+  "approval": {
+   "required": true,
+   "state": "Rejected",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "g.ferrari@diasorin.com",
+   "decidedAt": "2026-11-03 15:22",
+   "comment": "MDX maintenance is charged to CC-7300 (Molecular Diagnostics), not to the warehouse. Please change the cost centre and resubmit."
+  },
+  "history": [
+   {
+    "at": "2026-11-03 10:08",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-4410 approval"
+   },
+   {
+    "at": "2026-11-03 15:22",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "action": "Rejected",
+    "note": "Wrong cost centre"
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-11-03 15:22",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "kind": "rejected",
+    "text": "MDX maintenance is charged to CC-7300 (Molecular Diagnostics), not to the warehouse. Please change the cost centre and resubmit."
+   }
+  ]
+ },
+ {
+  "applicant": "Elena Bruni",
+  "applicantEmail": "e.bruni@diasorin.com",
+  "dept": "Molecular Diagnostics",
+  "phone": "+39 335 902 7711",
+  "id": "DSF-2026-0181",
+  "scope": "Extra-EU",
+  "shipDay": "2026-11-13",
+  "recCode": "DS-CH-ZUR",
+  "rcpt": {
+   "company": "Universitätsspital Zürich",
+   "first": "Andreas",
+   "last": "Keller",
+   "dept": "Institute of Medical Virology",
+   "street": "Rämistrasse 100",
+   "zip": "8091",
+   "city": "Zürich",
+   "prov": "ZH",
+   "country": "CH",
+   "phone": "+41 44 255 11 11",
+   "email": "virology@usz.ch",
+   "vat": "CHE-000.000.000"
+  },
+  "po": "PO-48361",
+  "reason": "16",
+  "cc": "CC-7300",
+  "items": [
+   {
+    "code": "P9996",
+    "desc": "Infectious substance affecting humans — reference panel",
+    "qty": "4 vials / lot V-55120",
+    "weight": 1.2,
+    "amount": 3900,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/6 S",
+    "dims": "40 × 30 × 30 cm — dry ice",
+    "gross": "9.5"
+   }
+  ],
+  "dedicated": "Yes",
+  "dedicatedNote": "UN 2814 — specialised courier required (SOP 15.0020)",
+  "created": "2026-11-07 08:26",
+  "status": "Pending approval",
+  "approval": {
+   "required": true,
+   "state": "Pending",
+   "approvers": [
+    "l.conti@diasorin.com"
+   ],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-07 08:26",
+    "by": "e.bruni@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-7300 approval · l.conti@diasorin.com notified"
+   },
+   {
+    "at": "2026-11-08 08:30",
+    "by": "system",
+    "role": "system",
+    "action": "Reminder sent",
+    "note": "Pending > 24 h → l.conti@diasorin.com"
+   },
+   {
+    "at": "2026-11-09 08:30",
+    "by": "system",
+    "role": "system",
+    "action": "Escalated",
+    "note": "Pending > 48 h → administrators notified"
+   }
+  ]
+ },
+ {
+  "applicant": "Franco Russo",
+  "applicantEmail": "f.russo@diasorin.com",
+  "dept": "Field Service",
+  "phone": "+39 335 512 6690",
+  "id": "DSF-2026-0183",
+  "scope": "Italy",
+  "shipDay": "2026-11-12",
+  "recCode": "DS-IT-SAL",
+  "rcpt": {
+   "company": "Azienda Ospedaliera di Padova",
+   "first": "Giovanni",
+   "last": "Sartori",
+   "dept": "Laboratorio Analisi",
+   "street": "Via Giustiniani 2",
+   "zip": "35128",
+   "city": "Padova",
+   "prov": "PD",
+   "country": "IT",
+   "phone": "+39 049 821 1111",
+   "email": "lab.analisi@aopd.veneto.it"
+  },
+  "reason": "101",
+  "cc": "CC-5100",
+  "items": [
+   {
+    "code": "P9925",
+    "desc": "Rack adapter + tubing set for LIAISON® XL",
+    "qty": "1 set / lot SP-7730",
+    "weight": 1.8,
+    "amount": 640,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/4",
+    "dims": "25 × 24 × 24 cm",
+    "gross": "2.3"
+   }
+  ],
+  "notes": "Instrument down — customer waiting.",
+  "created": "2026-11-08 07:41",
+  "status": "Pending approval",
+  "approval": {
+   "required": true,
+   "state": "Pending",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-08 07:41",
+    "by": "f.russo@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Routed to CC-5100 approval · g.ferrari@diasorin.com notified"
+   },
+   {
+    "at": "2026-11-09 07:45",
+    "by": "system",
+    "role": "system",
+    "action": "Reminder sent",
+    "note": "Pending > 24 h → g.ferrari@diasorin.com"
+   }
+  ]
+ },
+ {
+  "applicant": "Anna Greco",
+  "applicantEmail": "a.greco@diasorin.com",
+  "dept": "Quality Assurance",
+  "phone": "+39 335 908 3321",
+  "id": "DSF-2026-0184",
+  "scope": "Italy",
+  "shipDay": "2026-11-12",
+  "recCode": "DS-IT-GER",
+  "rcpt": {
+   "company": "Diasorin Italia S.p.A. — Gerenzano",
+   "first": "Marta",
+   "last": "Colombo",
+   "dept": "QC Laboratory",
+   "street": "Via Lepetit 34",
+   "zip": "21040",
+   "city": "Gerenzano",
+   "prov": "VA",
+   "country": "IT",
+   "phone": "+39 02 9644 1",
+   "email": "qc.gerenzano@diasorin.com"
+  },
+  "reason": "10",
+  "cc": "CC-6200",
+  "items": [
+   {
+    "code": "P9901",
+    "desc": "Biological substance category B — QC retention samples",
+    "qty": "10 vials / lot QC-1140",
+    "weight": 0.6,
+    "amount": 150,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/2",
+    "dims": "10 × 14 × 27 cm",
+    "gross": "1.1"
+   }
+  ],
+  "created": "2026-11-09 09:55",
+  "status": "To verify",
+  "approval": {
+   "required": false,
+   "state": "Skipped",
+   "approvers": [],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": "Requester is on the approval-exception list."
+  },
+  "history": [
+   {
+    "at": "2026-11-09 09:55",
+    "by": "a.greco@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Approval skipped — requester on exception list · customer management notified"
+   }
+  ]
+ },
+ {
+  "applicant": "Franco Russo",
+  "applicantEmail": "f.russo@diasorin.com",
+  "dept": "Field Service",
+  "phone": "+39 335 512 6690",
+  "id": "DSF-2026-0179",
+  "scope": "Italy",
+  "shipDay": "2026-11-11",
+  "recCode": "DS-IT-SAL",
+  "rcpt": {
+   "company": "ASST Grande Ospedale Metropolitano Niguarda",
+   "first": "Laura",
+   "last": "Ferri",
+   "dept": "Microbiologia",
+   "street": "Piazza Ospedale Maggiore 3",
+   "zip": "20162",
+   "city": "Milano",
+   "prov": "MI",
+   "country": "IT",
+   "phone": "+39 02 6444 1",
+   "email": "microbiologia@ospedaleniguarda.it"
+  },
+  "reason": "79",
+  "cc": "CC-5100",
+  "items": [
+   {
+    "code": "P9925",
+    "desc": "Reconditioned pipettor module",
+    "qty": "1 pc / SN 00412",
+    "weight": 3.4,
+    "amount": 2100,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/6",
+    "dims": "40 × 30 × 30 cm",
+    "gross": "4.2"
+   }
+  ],
+  "created": "2026-11-06 13:12",
+  "status": "Verified",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "g.ferrari@diasorin.com",
+   "decidedAt": "2026-11-06 15:00",
+   "comment": "Approved."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "",
+   "awb": "",
+   "verifiedAt": "2026-11-09 11:20",
+   "packedAt": "",
+   "shippedAt": "",
+   "deliveredAt": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-06 13:12",
+    "by": "f.russo@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": ""
+   },
+   {
+    "at": "2026-11-06 15:00",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-11-09 11:20",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Verified",
+    "note": ""
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-11-06 15:00",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "kind": "approved",
+    "text": "Approved."
+   }
+  ]
+ },
+ {
+  "applicant": "Elena Bruni",
+  "applicantEmail": "e.bruni@diasorin.com",
+  "dept": "Molecular Diagnostics",
+  "phone": "+39 335 902 7711",
+  "id": "DSF-2026-0180",
+  "scope": "EU",
+  "shipDay": "2026-11-11",
+  "recCode": "DS-ES-MAD",
+  "rcpt": {
+   "company": "Hospital Universitario La Paz",
+   "first": "Javier",
+   "last": "Ortega",
+   "dept": "Microbiología",
+   "street": "Paseo de la Castellana 261",
+   "zip": "28046",
+   "city": "Madrid",
+   "prov": "Madrid",
+   "country": "ES",
+   "phone": "+34 917 27 70 00",
+   "email": "microbiologia@salud.madrid.org"
+  },
+  "po": "PO-48302",
+  "reason": "09",
+  "cc": "CC-7300",
+  "items": [
+   {
+    "code": "P9930",
+    "desc": "LIAISON® MDX reagent cartridges — technical trial",
+    "qty": "24 pcs / lot MDX-2210",
+    "weight": 7.8,
+    "amount": 5120,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 2,
+    "pack": "I/10 S",
+    "dims": "37 × 37 × 52 cm — dry ice",
+    "gross": "28.0"
+   }
+  ],
+  "created": "2026-11-05 11:30",
+  "status": "Picked and packed",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "l.conti@diasorin.com"
+   ],
+   "decidedBy": "l.conti@diasorin.com",
+   "decidedAt": "2026-11-05 12:10",
+   "comment": "Technical trial — approved."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "",
+   "awb": "",
+   "verifiedAt": "2026-11-06 09:00",
+   "packedAt": "2026-11-10 08:45",
+   "shippedAt": "",
+   "deliveredAt": ""
+  },
+  "history": [
+   {
+    "at": "2026-11-05 11:30",
+    "by": "e.bruni@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": ""
+   },
+   {
+    "at": "2026-11-05 12:10",
+    "by": "l.conti@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-11-06 09:00",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Verified",
+    "note": ""
+   },
+   {
+    "at": "2026-11-10 08:45",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Picked and packed",
+    "note": "2 × I/10 S, dry ice topped up"
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-11-05 12:10",
+    "by": "l.conti@diasorin.com",
+    "role": "approver",
+    "kind": "approved",
+    "text": "Technical trial — approved."
+   }
+  ]
+ },
+ {
+  "applicant": "Marco Rossi",
+  "applicantEmail": "m.rossi@diasorin.com",
+  "dept": "Warehouse & Distribution",
+  "phone": "+39 335 118 4402",
+  "id": "DSF-2026-0174",
+  "scope": "EU",
+  "shipDay": "2026-11-07",
+  "recCode": "DS-BE-BRU",
+  "rcpt": {
+   "company": "UZ Leuven",
+   "first": "Pieter",
+   "last": "Janssens",
+   "dept": "Laboratory Medicine",
+   "street": "Herestraat 49",
+   "zip": "3000",
+   "city": "Leuven",
+   "prov": "",
+   "country": "BE",
+   "phone": "+32 16 33 22 11",
+   "email": "labo@uzleuven.be"
+  },
+  "reason": "95",
+  "cc": "CC-4410",
+  "items": [
+   {
+    "code": "P9993",
+    "desc": "LIAISON® XL reagent integral — replacement",
+    "qty": "6 pcs",
+    "weight": 3,
+    "amount": 2760,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/6 G",
+    "dims": "40 × 30 × 30 cm — cool packs",
+    "gross": "4.0"
+   }
+  ],
+  "created": "2026-10-30 16:05",
+  "status": "Returned for correction",
+  "approval": {
+   "required": true,
+   "state": "Approved",
+   "approvers": [
+    "g.ferrari@diasorin.com"
+   ],
+   "decidedBy": "g.ferrari@diasorin.com",
+   "decidedAt": "2026-10-31 09:00",
+   "comment": "Approved."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "",
+   "awb": "",
+   "verifiedAt": "",
+   "packedAt": "",
+   "shippedAt": "",
+   "deliveredAt": ""
+  },
+  "history": [
+   {
+    "at": "2026-10-30 16:05",
+    "by": "m.rossi@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": ""
+   },
+   {
+    "at": "2026-10-31 09:00",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "action": "Approved",
+    "note": ""
+   },
+   {
+    "at": "2026-11-02 10:15",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Returned for correction",
+    "note": "Lot / batch number missing on line 1"
+   }
+  ],
+  "comments": [
+   {
+    "at": "2026-10-31 09:00",
+    "by": "g.ferrari@diasorin.com",
+    "role": "approver",
+    "kind": "approved",
+    "text": "Approved."
+   },
+   {
+    "at": "2026-11-02 10:15",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "kind": "returned",
+    "text": "The replacement integrals need the lot / batch number on line 1 — the recipient must match it against the original delivery. Please add it and resubmit."
+   }
+  ]
+ },
+ {
+  "applicant": "Anna Greco",
+  "applicantEmail": "a.greco@diasorin.com",
+  "dept": "Quality Assurance",
+  "phone": "+39 335 908 3321",
+  "id": "DSF-2026-0169",
+  "scope": "Italy",
+  "shipDay": "2026-10-22",
+  "recCode": "DS-IT-SAL",
+  "rcpt": {
+   "company": "Diasorin S.p.A. — Saluggia",
+   "first": "Roberto",
+   "last": "Bianchi",
+   "dept": "Stability Lab",
+   "street": "Via Crescentino snc",
+   "zip": "13040",
+   "city": "Saluggia",
+   "prov": "VC",
+   "country": "IT",
+   "phone": "+39 0161 487 1",
+   "email": "stability@diasorin.com"
+  },
+  "reason": "10",
+  "cc": "CC-6200",
+  "items": [
+   {
+    "code": "P9993",
+    "desc": "Stability study kits — lot retention",
+    "qty": "8 kits / lot ST-2206",
+    "weight": 3.2,
+    "amount": 980,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 1,
+    "pack": "I/6 G",
+    "dims": "40 × 30 × 30 cm — cool packs",
+    "gross": "4.1"
+   }
+  ],
+  "created": "2026-10-20 08:40",
+  "status": "Delivered",
+  "approval": {
+   "required": false,
+   "state": "Skipped",
+   "approvers": [],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": "Requester is on the approval-exception list."
+  },
+  "oe": {
+   "owner": "p.moretti@diasorin.com",
+   "carrier": "DHL Express",
+   "awb": "JD0014600006509911",
+   "verifiedAt": "2026-10-20 10:10",
+   "packedAt": "2026-10-21 09:00",
+   "shippedAt": "2026-10-22 07:30",
+   "deliveredAt": "2026-10-22 15:40"
+  },
+  "history": [
+   {
+    "at": "2026-10-20 08:40",
+    "by": "a.greco@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Approval skipped — exception list"
+   },
+   {
+    "at": "2026-10-20 10:10",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Verified",
+    "note": ""
+   },
+   {
+    "at": "2026-10-21 09:00",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Picked and packed",
+    "note": ""
+   },
+   {
+    "at": "2026-10-22 07:30",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "In transit",
+    "note": "DHL Express · JD0014600006509911"
+   },
+   {
+    "at": "2026-10-22 15:40",
+    "by": "p.moretti@diasorin.com",
+    "role": "orderentry",
+    "action": "Delivered",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "applicant": "Luca Conti",
+  "applicantEmail": "l.conti@diasorin.com",
+  "dept": "Commercial Operations",
+  "phone": "+39 335 660 9014",
+  "id": "DSF-2026-0182",
+  "scope": "Extra-EU",
+  "shipDay": "2026-11-14",
+  "recCode": "DS-UK-DAR",
+  "rcpt": {
+   "company": "Diasorin Ltd",
+   "first": "Oliver",
+   "last": "Hughes",
+   "dept": "Marketing UK",
+   "street": "Central Road",
+   "zip": "DA1 5LR",
+   "city": "Dartford",
+   "prov": "Kent",
+   "country": "GB",
+   "phone": "+44 1322 622 222",
+   "email": "o.hughes@diasorin.com",
+   "vat": "GB 000 0000 00"
+  },
+  "po": "PO-48377",
+  "reason": "17",
+  "cc": "CC-3300",
+  "items": [
+   {
+    "code": "P9935",
+    "desc": "UK congress brochures and roll-ups (paper)",
+    "qty": "600 pcs + 2 roll-ups",
+    "weight": 18.5,
+    "amount": 540,
+    "currency": "EUR",
+    "origin": "Italy"
+   }
+  ],
+  "parcels": [
+   {
+    "n": 2,
+    "pack": "I/14",
+    "dims": "60 × 40 × 50 cm",
+    "gross": "21.0"
+   }
+  ],
+  "created": "2026-11-09 14:05",
+  "status": "To verify",
+  "approval": {
+   "required": false,
+   "state": "Not required",
+   "approvers": [],
+   "decidedBy": "",
+   "decidedAt": "",
+   "comment": "Approval is switched off for CC-3300."
+  },
+  "history": [
+   {
+    "at": "2026-11-09 14:05",
+    "by": "l.conti@diasorin.com",
+    "role": "requester",
+    "action": "Submitted",
+    "note": "Approval not required for CC-3300 · customer management notified"
+   }
+  ]
+ }
+]
